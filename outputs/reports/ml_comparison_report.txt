@@ -1,0 +1,31 @@
+ML Model Comparison Report
+==================================================
+Soil Moisture Suitability Classification - Bidar
+3 Algorithms Compared on Same Train/Test Split
+
+Algorithm                Accuracy      Kappa
+---------------------------------------------
+Random Forest              95.28%     0.1734
+SVM                        98.08%     0.0000
+Gradient Boosting          97.50%     0.0465
+
+
+Feature Importances (Random Forest):
+  rainfall: 0.3026
+  lst: 0.2268
+  ndvi: 0.2178
+  twi: 0.1423
+  slope: 0.1106
+  soil_ph: 0.0000
+
+Feature Importances (Gradient Boosting):
+  lst: 0.4532
+  twi: 0.3011
+  rainfall: 0.1346
+  slope: 0.0886
+  ndvi: 0.0225
+  soil_ph: 0.0000
+
+Note: SVM does not provide feature importances directly.
+
+Best model by accuracy: SVM (98.08%)

@@ -1,0 +1,17 @@
+# Master GIS Project - Dependencies
+# Soil Moisture Proxy Mapping & Crop Suitability Mapping
+
+# Core geospatial libraries
+numpy>=1.24.0
+scipy>=1.10.0
+matplotlib>=3.7.0
+rasterio>=1.3.0
+
+# Data handling
+pandas>=2.0.0
+
+# Accuracy assessment
+scikit-learn>=1.2.0
+
+# Image processing (for synthetic data spatial autocorrelation)
+Pillow>=9.5.0

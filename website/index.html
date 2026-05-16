@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soil Moisture Proxy Mapping &amp; Crop Suitability — Bidar District</title>
+  <meta name="description" content="Remote Sensing and GIS project: Soil moisture proxy mapping and maize crop suitability analysis for Bidar District, Karnataka using TVDI, TWI, MCE and Machine Learning.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ═══════ NAVBAR ═══════ -->
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="#" class="nav-logo">🛰️ <span>GIS Project</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#datasets">Datasets</a></li>
+      <li><a href="#methodology">Methodology</a></li>
+      <li><a href="#maps">Maps</a></li>
+      <li><a href="#results">Results</a></li>
+      <li><a href="#ml">ML Models</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ═══════ HERO ═══════ -->
+<section class="hero" id="hero">
+  <div class="hero-content">
+    <div class="hero-badge"><span class="dot"></span> Remote Sensing &amp; GIS Project — 2023</div>
+    <h1>Soil Moisture Proxy Mapping &amp; <span class="gradient-text">Crop Suitability Analysis</span></h1>
+    <p>Using MODIS NDVI, LST, SRTM DEM, CHIRPS Rainfall, and Machine Learning to assess Maize suitability in Bidar District, Karnataka, India.</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><div class="value">163+</div><div class="label">Satellite Files</div></div>
+      <div class="hero-meta-item"><div class="value">6</div><div class="label">Data Sources</div></div>
+      <div class="hero-meta-item"><div class="value">3</div><div class="label">ML Algorithms</div></div>
+      <div class="hero-meta-item"><div class="value">18</div><div class="label">Output Maps</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ ABOUT ═══════ -->
+<section id="about">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">Introduction</div>
+      <h2>About This Project</h2>
+      <p>A complete geospatial pipeline for soil moisture estimation and crop suitability mapping.</p>
+    </div>
+    <div class="grid-2">
+      <div class="card fade-in">
+        <h3 style="margin-bottom:1rem;">🎯 Objectives</h3>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:12px;">
+          <li style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent-green);">✓</span> Compute soil moisture proxy using TVDI triangle method and TWI</li>
+          <li style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent-green);">✓</span> Perform Multi-Criteria Evaluation for Maize crop suitability</li>
+          <li style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent-green);">✓</span> Train 3 ML classifiers (RF, SVM, Gradient Boosting)</li>
+          <li style="display:flex;gap:10px;align-items:flex-start;"><span style="color:var(--accent-green);">✓</span> Generate thematic maps and accuracy assessments</li>
+        </ul>
+      </div>
+      <div class="card fade-in">
+        <h3 style="margin-bottom:1rem;">📍 Study Area — Bidar District</h3>
+        <table class="data-table">
+          <tr><td style="font-weight:500;">Location</td><td>Northern Karnataka, India</td></tr>
+          <tr><td style="font-weight:500;">Coordinates</td><td>17.6°N–18.3°N, 76.8°E–77.6°E</td></tr>
+          <tr><td style="font-weight:500;">Terrain</td><td>Deccan Plateau, 451–613 m ASL</td></tr>
+          <tr><td style="font-weight:500;">Climate</td><td>Semi-arid, 734–1037 mm/year</td></tr>
+          <tr><td style="font-weight:500;">Soils</td><td>Vertisols (black cotton), pH ~7.6</td></tr>
+          <tr><td style="font-weight:500;">Resolution</td><td>~250 m (EPSG:4326)</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ DATASETS ═══════ -->
+<section id="datasets" style="background:var(--bg-secondary);">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">Data Sources</div>
+      <h2>Satellite Datasets Used</h2>
+      <p>All real data — manually downloaded from open-access platforms.</p>
+    </div>
+    <div class="card fade-in" style="overflow-x:auto;">
+      <table class="data-table">
+        <thead>
+          <tr><th>Dataset</th><th>Product</th><th>Source</th><th>Year</th><th>Resolution</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>🌿 NDVI</td><td>MOD13Q1 v061</td><td>NASA AppEEARS</td><td>2023</td><td>250 m</td></tr>
+          <tr><td>🌡️ LST</td><td>MOD11A2 v061</td><td>NASA AppEEARS</td><td>2023</td><td>1 km</td></tr>
+          <tr><td>⛰️ DEM</td><td>SRTM GL1</td><td>OpenTopography</td><td>Static</td><td>30 m</td></tr>
+          <tr><td>🌧️ Rainfall</td><td>CHIRPS v2.0</td><td>UCSB CHRS</td><td>2023</td><td>~5 km</td></tr>
+          <tr><td>🧪 Soil pH</td><td>SoilGrids 5–15 cm</td><td>ISRIC</td><td>2020</td><td>250 m</td></tr>
+          <tr><td>💧 SWI</td><td>Soil Water Index</td><td>Copernicus CLMS</td><td>2025</td><td>1 km</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ METHODOLOGY ═══════ -->
+<section id="methodology">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">Workflow</div>
+      <h2>Methodology</h2>
+      <p>From raw satellite data to suitability maps in a reproducible Python pipeline.</p>
+    </div>
+    <div class="grid-2">
+      <div class="card fade-in">
+        <div class="timeline">
+          <div class="timeline-item">
+            <h4>1. Data Preprocessing</h4>
+            <p>Reprojection to EPSG:4326, resampling to 250 m, quality masking, and temporal averaging of 163+ satellite files.</p>
+          </div>
+          <div class="timeline-item">
+            <h4>2. TWI Computation</h4>
+            <p>TWI = ln(a / tan(β)) — identifies areas where water naturally accumulates using SRTM DEM slope analysis.</p>
+          </div>
+          <div class="timeline-item">
+            <h4>3. TVDI Triangle Method</h4>
+            <p>LST/NDVI feature space: dry edge (95th pctl) and wet edge (5th pctl) fitted with linear regression across 50 NDVI bins.</p>
+          </div>
+          <div class="timeline-item">
+            <h4>4. Composite SMI</h4>
+            <p>SMI = 0.6 × (1 − TVDI) + 0.4 × TWI — combining thermal and topographic moisture indicators.</p>
+          </div>
+        </div>
+      </div>
+      <div class="card fade-in">
+        <div class="timeline">
+          <div class="timeline-item">
+            <h4>5. Multi-Criteria Evaluation</h4>
+            <p>Weighted Linear Combination: Moisture 40%, Slope 20%, Rainfall 20%, Soil pH 20% — reclassified to FAO 1–5 suitability scale.</p>
+          </div>
+          <div class="timeline-item">
+            <h4>6. ML Classification</h4>
+            <p>Three algorithms trained on 6 spectral/terrain features with Copernicus SWI as ground truth. 70/30 stratified split.</p>
+          </div>
+          <div class="timeline-item">
+            <h4>7. Accuracy Assessment</h4>
+            <p>Overall Accuracy, Cohen's Kappa, confusion matrices, and cross-model comparison charts.</p>
+          </div>
+          <div class="timeline-item">
+            <h4>8. Map Generation</h4>
+            <p>18 thematic maps exported as publication-ready PNG images using matplotlib.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ MAPS ═══════ -->
+<section id="maps" style="background:var(--bg-secondary);">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">Outputs</div>
+      <h2>Generated Maps</h2>
+      <p>Click any map to view full resolution.</p>
+    </div>
+
+    <h3 style="color:var(--accent-green);margin-bottom:1.2rem;font-size:1rem;text-transform:uppercase;letter-spacing:1px;" class="fade-in">Input Layers</h3>
+    <div class="grid-3 fade-in" style="margin-bottom:3rem;">
+      <div class="card map-card" onclick="openLightbox(this)"><img src="outputs/maps/real_ndvi.png" alt="NDVI Map"><h4>NDVI (Vegetation)</h4><p>Annual mean NDVI from MOD13Q1</p></div>
+      <div class="card map-card" onclick="openLightbox(this)"><img src="outputs/maps/real_lst.png" alt="LST Map"><h4>Land Surface Temperature</h4><p>Annual mean LST from MOD11A2</p></div>
+      <div class="card map-card" onclick="openLightbox(this)"><img src="outputs/maps/real_dem.png" alt="DEM Map"><h4>Digital Elevation Model</h4><p>SRTM GL1 — 451 to 613 m</p></div>
+      <div class="card map-card" onclick="openLightbox(this)"><img src="outputs/maps/real_slope.png" alt="Slope Map"><h4>Slope</h4><p>Derived from DEM — 95.5% flat</p></div>
+      <div class="card map-card" onclick="openLightbox(this)"><img src="outputs/maps/real_rainfall.png" alt="Rainfall Map"><h4>Annual Rainfall</h4><p>CHIRPS — 734 to 1037 mm/year</p></div>
+      <div class="card map-card" onclick="openLightbox(this)"><img src="outputs/maps/real_soil_ph.png" alt="Soil pH Map"><h4>Soil pH</h4><p>SoilGrids — Alkaline ~7.6</p></div>
+    </div>
+
+    <h3 style="color:var(--accent-blue);margin-bottom:1.2rem;font-size:1rem;text-transform:uppercase;letter-spacing:1px;" class="fade-in">Derived Indices</h3>
+    <div class="grid-3 fade-in" style="margin-bottom:3rem;">
+      <div class="card map-card" onclick="openLightbox(this)"><img src="outputs/maps/real_twi.png" alt="TWI Map"><h4>Topographic Wetness Index</h4><p>Water accumulation potential</p></div>
+      <div class="card map-card" onclick="openLightbox(this)"><img src="outputs/maps/real_tvdi.png" alt="TVDI Map"><h4>Temperature Vegetation Dryness Index</h4><p>0 (wet) to 1 (dry)</p></div>
+      <div class="card map-card" onclick="openLightbox(this)"><img src="outputs/maps/real_soil_moisture.png" alt="SMI Map"><h4>Composite Soil Moisture Index</h4><p>SMI = 0.6×(1−TVDI) + 0.4×TWI</p></div>
+    </div>
+
+    <h3 style="color:var(--accent-purple);margin-bottom:1.2rem;font-size:1rem;text-transform:uppercase;letter-spacing:1px;" class="fade-in">Suitability &amp; ML Results</h3>
+    <div class="grid-3 fade-in">
+      <div class="card map-card" onclick="openLightbox(this)"><img src="outputs/maps/mce_suitability_bidar.png" alt="MCE Suitability"><h4>MCE Suitability</h4><p>Weighted Linear Combination</p></div>
+      <div class="card map-card" onclick="openLightbox(this)"><img src="outputs/maps/ml_suitability_rf.png" alt="RF Suitability"><h4>Random Forest Suitability</h4><p>150 trees, max depth 12</p></div>
+      <div class="card map-card" onclick="openLightbox(this)"><img src="outputs/maps/ml_suitability_svm.png" alt="SVM Suitability"><h4>SVM Suitability</h4><p>RBF kernel classification</p></div>
+      <div class="card map-card" onclick="openLightbox(this)"><img src="outputs/maps/ml_suitability_gb.png" alt="GB Suitability"><h4>Gradient Boosting Suitability</h4><p>200 estimators, lr=0.1</p></div>
+      <div class="card map-card" onclick="openLightbox(this)"><img src="outputs/maps/ml_comparison_chart.png" alt="Model Comparison"><h4>Model Comparison Chart</h4><p>Accuracy &amp; Kappa side by side</p></div>
+      <div class="card map-card" onclick="openLightbox(this)"><img src="outputs/maps/mce_vs_ml_matrix.png" alt="MCE vs ML"><h4>MCE vs ML Agreement</h4><p>Cross-method validation</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ RESULTS ═══════ -->
+<section id="results">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">Analysis</div>
+      <h2>Results &amp; Discussion</h2>
+    </div>
+
+    <div class="grid-2" style="margin-bottom:2rem;">
+      <div class="card fade-in">
+        <h3 style="margin-bottom:1.2rem;">🌾 MCE Suitability Results</h3>
+        <p style="font-size:0.88rem;color:var(--text-secondary);margin-bottom:1.2rem;">Maize (Zea mays) suitability for Bidar District</p>
+        <div class="progress-item">
+          <div class="progress-label"><span>Suitable (S2)</span><span>60.6%</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width:60.6%"></div></div>
+        </div>
+        <div class="progress-item">
+          <div class="progress-label"><span>Moderately Suitable (S3)</span><span>38.1%</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width:38.1%"></div></div>
+        </div>
+        <div class="progress-item">
+          <div class="progress-label"><span>Marginally Suitable (S4)</span><span>1.3%</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width:5%"></div></div>
+        </div>
+        <div class="progress-item">
+          <div class="progress-label"><span>Highly Suitable (S1)</span><span>0.1%</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width:2%"></div></div>
+        </div>
+      </div>
+      <div class="card fade-in">
+        <h3 style="margin-bottom:1.2rem;">📊 TVDI Edge Fitting</h3>
+        <p style="font-size:0.88rem;color:var(--text-secondary);margin-bottom:1rem;">LST/NDVI triangle method parameters</p>
+        <div style="background:var(--bg-glass);border-radius:var(--radius-sm);padding:1.2rem;font-family:'JetBrains Mono',monospace;font-size:0.85rem;margin-bottom:1rem;">
+          <div style="margin-bottom:8px;"><span style="color:var(--accent-amber);">Dry edge:</span> LST_max = 306.7 + 5.49 × NDVI</div>
+          <div><span style="color:var(--accent-blue);">Wet edge:</span> LST_min = 299.2 + 14.04 × NDVI</div>
+        </div>
+        <table class="data-table" style="font-size:0.82rem;">
+          <tr><td>TVDI Range</td><td>0.000 → 1.000</td></tr>
+          <tr><td>NDVI Range</td><td>−0.103 → 0.703</td></tr>
+          <tr><td>LST Range</td><td>299.0 K → 311.3 K</td></tr>
+          <tr><td>Elevation</td><td>451 m → 613 m</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="card fade-in" style="text-align:center;padding:1.5rem;">
+      <p style="color:var(--text-secondary);font-size:0.92rem;max-width:700px;margin:0 auto;">
+        <strong style="color:var(--accent-green);">Key finding:</strong> Over 60% of Bidar district is classified as <strong>Suitable</strong> for Maize cultivation. 
+        The main limiting factor is alkaline soil pH (7.6), slightly above Maize optimum (5.8–7.0). Flat terrain and adequate rainfall are favourable.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ ML ═══════ -->
+<section id="ml" style="background:var(--bg-secondary);">
+  <div class="container">
+    <div class="section-header fade-in">
+      <div class="section-tag">Machine Learning</div>
+      <h2>3-Algorithm Comparison</h2>
+      <p>All models trained on same 70/30 stratified split with 6 spectral/terrain features.</p>
+    </div>
+
+    <div class="grid-3 fade-in" style="margin-bottom:2.5rem;">
+      <div class="card" style="text-align:center;">
+        <div style="font-size:2rem;margin-bottom:0.5rem;">🌲</div>
+        <h4>Random Forest</h4>
+        <div style="font-size:2.2rem;font-weight:700;color:var(--accent-green);margin:0.5rem 0;">95.28%</div>
+        <div style="font-size:0.78rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;">Accuracy</div>
+        <div style="margin-top:0.5rem;font-family:'JetBrains Mono',monospace;font-size:0.85rem;color:var(--text-secondary);">κ = 0.1734</div>
+        <p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.8rem;">150 trees · max depth 12</p>
+      </div>
+      <div class="card" style="text-align:center;border-color:var(--accent-blue);">
+        <div style="font-size:2rem;margin-bottom:0.5rem;">⚡</div>
+        <h4>SVM (RBF Kernel)</h4>
+        <div style="font-size:2.2rem;font-weight:700;color:var(--accent-blue);margin:0.5rem 0;">98.08%</div>
+        <div style="font-size:0.78rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;">Accuracy (Best)</div>
+        <div style="margin-top:0.5rem;font-family:'JetBrains Mono',monospace;font-size:0.85rem;color:var(--text-secondary);">κ = 0.0000</div>
+        <p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.8rem;">RBF kernel · 50k subsample</p>
+      </div>
+      <div class="card" style="text-align:center;">
+        <div style="font-size:2rem;margin-bottom:0.5rem;">🚀</div>
+        <h4>Gradient Boosting</h4>
+        <div style="font-size:2.2rem;font-weight:700;color:var(--accent-purple);margin:0.5rem 0;">97.50%</div>
+        <div style="font-size:0.78rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;">Accuracy</div>
+        <div style="margin-top:0.5rem;font-family:'JetBrains Mono',monospace;font-size:0.85rem;color:var(--text-secondary);">κ = 0.0465</div>
+        <p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.8rem;">200 estimators · lr=0.1</p>
+      </div>
+    </div>
+
+    <div class="grid-2 fade-in" style="margin-bottom:2rem;">
+      <div class="card">
+        <h4 style="margin-bottom:1rem;">🌲 RF Feature Importances</h4>
+        <div class="progress-item"><div class="progress-label"><span>Rainfall</span><span>0.3026</span></div><div class="progress-bar"><div class="progress-fill" style="width:30.26%"></div></div></div>
+        <div class="progress-item"><div class="progress-label"><span>LST</span><span>0.2268</span></div><div class="progress-bar"><div class="progress-fill" style="width:22.68%"></div></div></div>
+        <div class="progress-item"><div class="progress-label"><span>NDVI</span><span>0.2178</span></div><div class="progress-bar"><div class="progress-fill" style="width:21.78%"></div></div></div>
+        <div class="progress-item"><div class="progress-label"><span>TWI</span><span>0.1423</span></div><div class="progress-bar"><div class="progress-fill" style="width:14.23%"></div></div></div>
+        <div class="progress-item"><div class="progress-label"><span>Slope</span><span>0.1106</span></div><div class="progress-bar"><div class="progress-fill" style="width:11.06%"></div></div></div>
+        <div class="progress-item"><div class="progress-label"><span>Soil pH</span><span>0.0000</span></div><div class="progress-bar"><div class="progress-fill" style="width:0.5%"></div></div></div>
+      </div>
+      <div class="card">
+        <h4 style="margin-bottom:1rem;">🚀 GB Feature Importances</h4>
+        <div class="progress-item"><div class="progress-label"><span>LST</span><span>0.4532</span></div><div class="progress-bar"><div class="progress-fill" style="width:45.32%"></div></div></div>
+        <div class="progress-item"><div class="progress-label"><span>TWI</span><span>0.3011</span></div><div class="progress-bar"><div class="progress-fill" style="width:30.11%"></div></div></div>
+        <div class="progress-item"><div class="progress-label"><span>Rainfall</span><span>0.1346</span></div><div class="progress-bar"><div class="progress-fill" style="width:13.46%"></div></div></div>
+        <div class="progress-item"><div class="progress-label"><span>Slope</span><span>0.0886</span></div><div class="progress-bar"><div class="progress-fill" style="width:8.86%"></div></div></div>
+        <div class="progress-item"><div class="progress-label"><span>NDVI</span><span>0.0225</span></div><div class="progress-bar"><div class="progress-fill" style="width:2.25%"></div></div></div>
+        <div class="progress-item"><div class="progress-label"><span>Soil pH</span><span>0.0000</span></div><div class="progress-bar"><div class="progress-fill" style="width:0.5%"></div></div></div>
+      </div>
+    </div>
+
+    <div class="grid-3 fade-in">
+      <div class="card map-card" onclick="openLightbox(this)"><img src="outputs/maps/ml_confusion_rf.png" alt="RF Confusion Matrix"><h4>RF Confusion Matrix</h4></div>
+      <div class="card map-card" onclick="openLightbox(this)"><img src="outputs/maps/ml_confusion_svm.png" alt="SVM Confusion Matrix"><h4>SVM Confusion Matrix</h4></div>
+      <div class="card map-card" onclick="openLightbox(this)"><img src="outputs/maps/ml_confusion_gb.png" alt="GB Confusion Matrix"><h4>GB Confusion Matrix</h4></div>
+    </div>
+
+    <div class="card fade-in" style="margin-top:2rem;padding:1.5rem;text-align:center;">
+      <p style="color:var(--text-secondary);font-size:0.9rem;max-width:750px;margin:0 auto;">
+        <strong style="color:var(--accent-amber);">Note:</strong> High accuracy with low Kappa is due to severe class imbalance — 98% of SWI pixels fall into Class 5 (Highly Suitable). 
+        This is a data distribution limitation, not an algorithm limitation.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ FOOTER ═══════ -->
+<footer class="footer">
+  <p>Soil Moisture Proxy Mapping &amp; Crop Suitability Analysis — Bidar District, Karnataka</p>
+  <p style="margin-top:6px;">Remote Sensing &amp; GIS · By Sainath · 2023</p>
+</footer>
+
+<!-- ═══════ LIGHTBOX ═══════ -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+  <img id="lightbox-img" src="" alt="Full size map">
+</div>
+
+<script>
+// Lightbox
+function openLightbox(card) {
+  const img = card.querySelector('img');
+  document.getElementById('lightbox-img').src = img.src;
+  document.getElementById('lightbox').classList.add('active');
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+// Scroll fade-in
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Navbar scroll effect
+window.addEventListener('scroll', () => {
+  const navbar = document.querySelector('.navbar');
+  navbar.style.boxShadow = window.scrollY > 50 ? '0 4px 30px rgba(0,0,0,0.3)' : 'none';
+});
+</script>
+
+</body>
+</html>
